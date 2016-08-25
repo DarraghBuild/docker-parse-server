@@ -1,0 +1,21 @@
+#!/bin/bash
+BACKUP_PATH=${1:-$HOME/Dropbox/MealPass/ENGINEERING/parse/55fe3a5f-eb48-4b6d-968a-054fe60a85f4_1472093260_export}
+echo "Importing from: $BACKUP_PATH"
+SCHEMAS=$BAKCUP_PATH/SCHEMA.json
+DATA=$BACKUP_PATH/.json
+
+function do_import {
+    for f in $SCHEMAS $DATA; do
+        if [ ! -s $f ]; then
+            continue
+        fi
+
+        collection=`basename $f .json`
+        echo "======================"
+        echo "Importing: $collection"
+        jq '.results' $f | mongoimport -d dev -c $collection --jsonArray
+        curl -X POST -H "X-Parse-Application-Id: YOUR_APP_ID" -H "X-Parse-Master-Key: YOUR_MASTER_KEY" http://localhost:1337/parse/classes/$collection
+    done
+}
+
+do_import
