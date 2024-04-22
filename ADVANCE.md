@@ -235,7 +235,7 @@ $ curl https://github.com/yongjhih.keys | docker exec -i parse-server ssh-add-ke
 ## Getting Started With Heroku + Mongolab Development
 ### With the Heroku Button
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+Build.io
 
 ### Without It
 
